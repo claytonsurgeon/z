@@ -1,0 +1,63 @@
+
+
+
+.first -1
+
+.duckman -20.333333333 3 (1 2 3)
+
+.a |xpos| [4 .4] w.waffle..k +
+
+
+.constant {
+	.e |x| x !! 1+ //* %% /+ 1+
+}
+
+
+.quad {
+	.a i32
+	.b i32
+	.c i32
+
+	.dis b 2^ [4 a c]/* -
+	.squ dis 0.5^
+	.den 2 a*
+
+	.neg 0 b- squ- den%
+	.pos 0 b- squ+ den%
+}
+
+.result quad {
+	.a 1
+	.b 5
+	.c 3
+}
+
+
+.quad2 |a b c| b 2^ [4 a c] /* - 0.5^ |squ| 2 a* |den| [
+	0 b- squ- den%
+	0 b- squ+ den%
+]
+
+.quad: |a b c| b^2 - *\[4, a, c] ^ 0.5
+
+.swap |x y| y x
+
+
+
+a: 10, b: 20, c: 30
+
+.a 10, .b 20, .c 30
+
+.result quad {
+	.a	.b	.c
+}
+
+result: quad {
+	.a	.b	.c
+}
+
+
+.duck Matrix 3\\+
+
+each: [1 2 3 4] .. operation
+penguin [0] [1 2 3 4] join 0//+

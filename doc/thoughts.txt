@@ -1,0 +1,429 @@
+
+composition over application
+
+postfix is most readable if you write your sequences like a postfix APL. Try to avoid accumulating more than one or two objects on the stack at a time.
+
+
+
+
+.define
+:clone&define
+
+
+
+.object {
+	.propa 10
+	.propb 20
+}
+
+// this should create the point 'propa' with the value: 20 8, in context
+.context {
+	:object.propa 8
+}
+
+
+
+
+reactivity will be limited to points for now
+
+what if sequences didn't need their own space?
+a large portion of memory could be subdivided into several stack and when a point needs to be rerun it just takes ownership of one of the stacks.
+
+this also means that memory can be constrained, if there are no stacks available, then that point simple remains at the top of the queue until a stack is open
+
+
+
+
+
+
+
+.quad {
+	:a i32
+	:b i32
+	:c i32
+
+	.k b 2 ^ [4 a c] (*) fold - 0.5 ^
+
+	.neg b ~ k - 2 a * /
+	.neg b ~ k + 2 a * /
+}
+
+
+.combine {
+	:op |i32 i32| i32			// op must consume 2 integers and produce 1 integer
+	.a 10
+	.b 20
+
+	:out i32						// out must produce 1 interger
+	.out a b op					
+}
+
+
+.x combine {
+	.op +
+}
+// x.out == 30
+
+.y combine {
+	.op *
+}
+// y.out == 200
+
+
+
+i32 f32 c64		basic types
+
+x32 x64			any type of specified width
+
+ix fx				any width of specified type
+
+
+
+
+
+:Res Z32 String Result
+.Res x is-{
+	:	x Ok  ->
+	:	x Err ->
+}
+
+
+.Res x is-{
+	|	n Ok	-> n 1 + Ok
+	|	m Err	-> "fail" Err
+}
+
+
+.Res |x y| (x y) is-{
+	(j Ok, k Ok)	j k + Ok
+	(m Err, k Ok)	m Err
+	(j Ok, n Err)	n Err
+	(m Err, n Err)	m n Join Err
+}
+
+
+.Res |x y| (x y)
+	(	(j Ok, k Ok)	(j k + Ok)
+		(m Err, k Ok)	(m Err)
+		(j Ok, n Err)	(n Err)
+		(m Err, n Err)	(m n Join Err)
+	)	is
+
+
+.max |x y|
+(	(x y <) (y)
+	(x y =) (y)
+	(x y >) (x)
+)	if
+
+.max |x y| if-{
+   {x y <} y
+   {x y =} y
+   {x y >} x }
+   dup +
+	
+
+.max |x| is-{
+	{ n Ok  } n
+	{ _ Err } 0
+}
+
+
+
+
+
+duck :: Maybe a -> a
+ducki32 :: Maybe Z32 -> Z32
+
+
+:duck Maybe
+:duck a Maybe
+:duck Z32 Maybe
+
+
+
+
+:duck Z32 Maybe
+
+
+
+
+add :: a -> a -> a
+add :: (a, a) -> a
+
+:add |a||a| a
+:add |a a| a
+
+
+duck :: maybe a -> a
+
+:duck |a| a Maybe
+:duck Maybe
+
+:duck 
+
+
+:duck |Option| i32
+.duck |var| is-{
+	.	x Some -> x
+	.	None	 -> 0
+}
+
+:duck i32 Option
+.duck |var| is-{
+	.(x Some) x
+	.(None)	 0
+}
+
+
+:Option |x| enum-{
+	.	x Some
+	.	None
+}
+
+:val i32 Option
+
+.a 
+
+
+there is no point in allowing cycles, they too easily create undefined behavior
+however, the ability to refer to code out of order is nice, otherwise the programmer has to do the code ordering themselves.
+
+however, strict ordering does allow for names to be redefined
+but this is a relatively small benefit
+
+
+
+
+
+Z32 Integer
+N32 Natural
+F32 Fractol
+
+
+
+
+
+
+after Point::Program, the operator table is defined
+this is where the operators are specified
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+the elementary data type is the stack, each element of the stack is block as in forth. stacks are used to coordinate the execution of the array code and data
+
+
+the operations of the stack comprise a meta language for arranging the continuous calculations of the program graph
+
+
+
+what if the concept of "lookahead" was turned into an operator such that programming constructs like fold, scan, each etc could be implemented in the stack
+
+
+
+the idea is that the program monarray should be able to sustain significant modification without requiring a full recompile
+
+This is done by silencing the old version of a point and inserting the new version at the end of the monarray
+full rebuilds remove any artifacts
+full rebuild should be done periodically, because the accumulated garbage after a few weeks of programming could be large
+
+
+
+INSTRUCTIONS: 0-127 define the elementary instructions, 128-N are defined externally, similar to how UTF-8 defines characters past ascii
+
+
+TYPES: Monarray does not have a sophisticated type system, to remain rank polymorphic, the only type you can specify is the base width/format (i8, u64, f32, etc). This gives the elementary functions just enough information to dispatch the correct machine instructions and the correct sized data retrieval.
+
+complex data (not complex numbers) can be passed between external functions as a byte array (u8)
+
+
+
+
+
+rank 0 -> scalar array, 1 element of specified width
+rank 1 -> vector array, N elements of specified width
+rank N -> vector of array heads, N elements of array-head width
+
+
+
+
+LIMITATION: the rank of an array should never be dynamic, this limitation is only relevant to the 'reshape' operation, while the lengths of each dimension can be dynamic, the length of the shape array (the rank) itself cannot be dynamic.
+
+
+allowed:		[a b c] x!! $
+illegal:		x!! x!! $
+
+
+
+
+
+PARTIAL APPLICATION: An operator can be partially applied, this is recognized by an operator with one or more argument indexes that are 0
+		lambdas have a variable number of arguments, if arg indexes are zero then the sequence does not reduce
+
+
+
+RECURSION: all recursion is divergent, gates and iterators are used to limit recursion instead of conditionals
+
+// ungated, counts as fast as possible forever, probably not what you want
+counter: counter 1 +
+
+// gated, recursion is controlled by signal
+counter: counter 1 + signal ? 
+
+
+
+
+	type - enum that says, I am a an array or key or ref, etc
+	bytesize - the memory width of a program
+	parent - the node immediately above that has this element as a child
+	children - immiate descendant nodes
+	width - the elementary unit of an array
+
+
+Program { 		always the first point in the monarray
+	type
+	bytesize
+	array-pointer
+}
+
+
+
+Graph {			 array of keys
+	type
+	parent
+	count
+	children
+}
+
+
+Tuple {			array of points
+	type
+	parent
+	count
+	children
+}
+
+
+
+		// arrays are always intermediary data points, this allows them to be reused
+Array {			 array of point indexs
+	type
+	parent
+
+	width
+	rank
+	count
+	data[]			fixed length array of pointers to exponentially larger arrays
+}
+
+
+
+Op1 {
+	type
+	parent
+	a array index
+	z array index
+}
+
+
+
+Op2 {
+	type
+	parent
+	operator
+	a array index
+	b array index
+	z array index
+}
+
+
+
+	// it is important to remember that scalars are nullary functions, not simple data as in C
+Scalar {
+	type
+	parent
+	width
+	value
+	z array index
+}
+
+
+
+
+Key {
+	type
+	parent
+
+	child
+	label
+	shell				// removed in stage B
+	push[]
+}
+
+Ref {
+	type
+	parent
+	key index
+	shell				// removed in stage B
+	label
+}
+
+
+Lambda {
+	type
+	parent
+	z array index
+	rank			// number of lambda args
+	args[]
+}
+
+
+
+verbs
+
+
+adverbs
+
+
+cube: [3 3 3] 27!! $
+       ^   ^
+		 L   R		Leftmost, Rightmost
+
+/	fold leftmost axis
+// scan leftmost axis
+
+\	fold rightmost axis
+\\ scan rightmost axis

@@ -1,0 +1,111 @@
+{
+    "prog.b.d.a": Point {
+        node: Stack,
+        key: "prog.b.d.a",
+        ref: "",
+        points: [],
+    },
+    "prog.duck.x.m": Point {
+        node: Stack,
+        key: "prog.duck.x.m",
+        ref: "",
+        points: [],
+    },
+    "prog.b.k": Point {
+        node: Graph,
+        key: "prog.b.k",
+        ref: "d",
+        points: [
+            "prog.b.k.a",
+            "prog.b.k.m",
+        ],
+    },
+    "add": Point {
+        node: Stack,
+        key: "add",
+        ref: "",
+        points: [],
+    },
+    "prog.duck.x": Point {
+        node: Graph,
+        key: "prog.duck.x",
+        ref: "b.d",
+        points: [
+            "prog.duck.x.a",
+            "prog.duck.x.m",
+        ],
+    },
+    "prog.duck": Point {
+        node: Graph,
+        key: "prog.duck",
+        ref: "",
+        points: [
+            "prog.duck.x",
+            "prog.duck.b",
+        ],
+    },
+    "prog.b.a": Point {
+        node: Stack,
+        key: "prog.b.a",
+        ref: "",
+        points: [],
+    },
+    "prog.b.d.m": Point {
+        node: Stack,
+        key: "prog.b.d.m",
+        ref: "",
+        points: [],
+    },
+    "prog.b.d": Point {
+        node: Graph,
+        key: "prog.b.d",
+        ref: "",
+        points: [
+            "prog.b.d.a",
+            "prog.b.d.m",
+        ],
+    },
+    "prog.b.k.m": Point {
+        node: Stack,
+        key: "prog.b.k.m",
+        ref: "",
+        points: [],
+    },
+    "prog": Point {
+        node: Graph,
+        key: "prog",
+        ref: "",
+        points: [
+            "prog.duck",
+            "prog.b",
+        ],
+    },
+    "prog.b": Point {
+        node: Graph,
+        key: "prog.b",
+        ref: "",
+        points: [
+            "prog.b.a",
+            "prog.b.k",
+            "prog.b.d",
+        ],
+    },
+    "prog.duck.x.a": Point {
+        node: Stack,
+        key: "prog.duck.x.a",
+        ref: "",
+        points: [],
+    },
+    "prog.b.k.a": Point {
+        node: Stack,
+        key: "prog.b.k.a",
+        ref: "",
+        points: [],
+    },
+    "prog.duck.b": Point {
+        node: Stack,
+        key: "prog.duck.b",
+        ref: "",
+        points: [],
+    },
+}
