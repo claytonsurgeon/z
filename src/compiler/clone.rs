@@ -1,4 +1,4 @@
-use super::parser::{EMap, Element, Index, Node, PMap, Point};
+use super::parser::{EMap, Element, Index, Node, PMap, Point, TMap};
 // use std::collections::HashMap;
 
 // NOTE: this doesn't cover the case of punning and cloning at the same time
@@ -7,6 +7,7 @@ use super::parser::{EMap, Element, Index, Node, PMap, Point};
 struct State {
 	pmap: PMap,
 	emap: EMap,
+	tmap: TMap,
 }
 
 fn last_point(key: &String) -> String {
@@ -57,8 +58,8 @@ fn contains(keys: &Vec<String>, key: &String) -> bool {
 	false
 }
 
-pub fn parser(pmap: PMap, emap: EMap) -> Result<(PMap, EMap), String> {
-	let mut state = State { pmap, emap };
+pub fn parser(pmap: PMap, emap: EMap, tmap: TMap) -> Result<(PMap, EMap, TMap), String> {
+	let mut state = State { pmap, emap, tmap };
 
 	let keys: Vec<String> = state.pmap.keys().cloned().collect();
 	let vals: Vec<Point> = state.pmap.values().cloned().collect();
@@ -68,7 +69,7 @@ pub fn parser(pmap: PMap, emap: EMap) -> Result<(PMap, EMap), String> {
 		}
 	}
 
-	Ok((state.pmap, state.emap))
+	Ok((state.pmap, state.emap, state.tmap))
 }
 
 impl State {

@@ -1,30 +1,9 @@
 {
-    "prog.b.d.a": Point {
+    "addition": Point {
         node: Stack,
-        key: "prog.b.d.a",
+        key: "addition",
         ref: "",
         points: [],
-    },
-    "prog.b.d.m": Point {
-        node: Stack,
-        key: "prog.b.d.m",
-        ref: "",
-        points: [],
-    },
-    "prog.b.k": Point {
-        node: Clone,
-        key: "prog.b.k",
-        ref: "d",
-        points: [],
-    },
-    "prog.b.d": Point {
-        node: Graph,
-        key: "prog.b.d",
-        ref: "",
-        points: [
-            "prog.b.d.a",
-            "prog.b.d.m",
-        ],
     },
     "add": Point {
         node: Stack,
@@ -32,57 +11,9 @@
         ref: "",
         points: [],
     },
-    "prog": Point {
-        node: Graph,
-        key: "prog",
-        ref: "",
-        points: [
-            "prog.duck",
-            "prog.b",
-        ],
-    },
-    "prog.b": Point {
-        node: Graph,
-        key: "prog.b",
-        ref: "",
-        points: [
-            "prog.b.a",
-            "prog.b.k",
-            "prog.b.d",
-        ],
-    },
-    "prog.duck.x": Point {
-        node: Clone,
-        key: "prog.duck.x",
-        ref: "b.d",
-        points: [
-            "prog.duck.x.a",
-        ],
-    },
-    "prog.duck": Point {
-        node: Graph,
-        key: "prog.duck",
-        ref: "",
-        points: [
-            "prog.duck.x",
-            "prog.duck.b",
-        ],
-    },
-    "prog.duck.x.a": Point {
+    "e": Point {
         node: Stack,
-        key: "prog.duck.x.a",
-        ref: "",
-        points: [],
-    },
-    "prog.b.a": Point {
-        node: Stack,
-        key: "prog.b.a",
-        ref: "",
-        points: [],
-    },
-    "prog.duck.b": Point {
-        node: Stack,
-        key: "prog.duck.b",
+        key: "e",
         ref: "",
         points: [],
     },

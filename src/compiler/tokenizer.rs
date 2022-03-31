@@ -9,7 +9,11 @@ pub enum Kind {
    //
    String,
    Number,
+   Integer,
+   Decimal,
+
    //
+   Arrow, // ->
    ParenLF,
    ParenRT,
    SquarenLF,
@@ -21,8 +25,9 @@ pub enum Kind {
 
    Post,
 
-   Typ,
-   Key,
+   Typ, // :
+   Key, // ;
+   Com, // ,
    Ref,
    Dot,
 }
@@ -50,17 +55,17 @@ pub fn tokenizer(input: &String) -> Result<Vec<Token>, String> {
             // Comments
             (Kind::Skip, Regex::new(r"^;;.*").unwrap()),
 
-            // Numbers
-
+            (Kind::Arrow, Regex::new(r"^(→|->)").unwrap()),
             (Kind::Post, Regex::new(r"^\|").unwrap()),
 
-            (Kind::Number, Regex::new(r"^[[:digit:]]([^[:space:]|{}()\[\]])*").unwrap()),
-            (Kind::Control, Regex::new(r"^([^[:space:].|{}()\[\]])+\-\{").unwrap()),
+            // (Kind::Number, Regex::new(r"^[[:digit:]]([^[:space:]|{}()\[\]])*").unwrap()),
+            // (Kind::Control, Regex::new(r"^([^[:space:].|{}()\[\]])+\-\{").unwrap()),
 
-            (Kind::Typ, Regex::new(r"^\:([^[:space:].|{}()\[\]])+").unwrap()),
-            (Kind::Key, Regex::new(r"^\.([^[:space:].|{}()\[\]])+").unwrap()),
-            (Kind::Dot, Regex::new(r"^\.").unwrap()),
-            (Kind::Ref, Regex::new(r"^([^[:space:]|{}()\[\]])+").unwrap()),
+            (Kind::Com, Regex::new(r"^,").unwrap()),
+            (Kind::Typ, Regex::new(r"^([^[:space:],|{}()\[\]])+:").unwrap()),
+            (Kind::Key, Regex::new(r"^([^[:space:],|{}()\[\]])+;").unwrap()),
+            // (Kind::Dot, Regex::new(r"^\.").unwrap()),
+            (Kind::Ref, Regex::new(r"^([^[:space:],|{}()\[\]])+").unwrap()),
 
 
 
@@ -83,6 +88,21 @@ pub fn tokenizer(input: &String) -> Result<Vec<Token>, String> {
             (Kind::Invalid, Regex::new(r"^.").unwrap()),
          ];
    }
+   // decide what is a word aka reference and what is a number
+   lazy_static! {
+      static ref WORD: Vec<(Kind, Regex)> = vec![
+         (
+            Kind::Decimal,
+            Regex::new(r"^[[:digit:]]+\.[[:digit:]]*$").unwrap()
+         ),
+         (
+            Kind::Decimal,
+            Regex::new(r"^[[:digit:]]*\.[[:digit:]]+$").unwrap()
+         ),
+         (Kind::Integer, Regex::new(r"^[[:digit:]]+$").unwrap()),
+         // (Kind::Ref, Regex::new(r"^.").unwrap()),
+      ];
+   }
 
    let mut tokens: Vec<Token> = Vec::new();
    let mut cursor = 0;
@@ -96,7 +116,7 @@ pub fn tokenizer(input: &String) -> Result<Vec<Token>, String> {
             Some(mat) => {
                let token_text = &input[cursor..cursor + mat.end()];
                let text = token_text.to_string();
-               let t = Token {
+               let mut t = Token {
                   kind: *kind,
                   text,
                   meta: Meta { col, row },
@@ -109,6 +129,16 @@ pub fn tokenizer(input: &String) -> Result<Vec<Token>, String> {
                      col = 1;
                   }
                   Kind::Skip => {}
+                  Kind::Ref => {
+                     // let x = true;
+                     for (kind, re) in &WORD[..] {
+                        if re.is_match(&t.text) {
+                           t.kind = *kind;
+                           break;
+                        }
+                     }
+                     tokens.push(t);
+                  }
                   _ => {
                      tokens.push(t);
                   }

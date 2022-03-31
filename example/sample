@@ -1,174 +1,50 @@
 
 
 
-.prog {
-   .duck {
-      .x b.d {
-         .a 5
-      }
-      .b { .a 9 }
-      
-   }
-   .b {
-      .a 10
-      .k d {}
-      .d {
-         .a
-         .m 9
-      }
-   }
-}
-
-
-;;; :e |f32| f32
-.e !! 1 + (×) // 1÷ (+) / 1 +
-
-
-
-.quad {
-	:a :b :c f32
-
-	.dis b 2 * [4 a c] (×) / -
-	.squ dis 0.5 *
-	.den 2 a ×
-
-	.pos b 0- squ - den ÷
-	.neg b 0- squ + den ÷
-}
-
 ;;; prog: {
+;;;    w: f32
 ;;;    duck: {
 ;;;       x: b.d {
-;;;          a: 5
+;;;          a; 5
 ;;;       }
-;;;       b. { a: 9 }
+;;;       b: { a; 9 }
       
 ;;;    }
 ;;;    b: {
-;;;       a: 10
+;;;       a; 10
 ;;;       k: d {}
 ;;;       d: {
-;;;          a.
-;;;          m: 9
-;;;       }
-;;;    }
-;;; }
-
-;;; group: { a. b. c. }
-;;; group: { a, b, c }
-;;; :group { .a .b .c }
-;;; :group { ..a ..b ..c }
-;;; .group { :a :b :c }
-
-
-;;; groupxsdf
-
-
-;;; :prog {
-;;;    :duck {
-;;;       :x b.d {
-;;;          :a 5
-;;;       }
-;;;       .b {
-;;;          :a 9
-;;;       }
-
-;;;    }
-;;;    :b {
-;;;       :a 10
-;;;          :k d { }
-;;;       :d {
-;;;          .a
-;;;          :m 9
-;;;       }
-;;;    }
-;;; }
-
-;;; prog: {
-;;;    duck: {
-;;;       x: b.d {
-;;;          a: 5
-;;;       }
-;;;       b {
-;;;          a: 9
-;;;       }
-;;;    }
-;;;    b: {
-;;;       a: 10
-;;;       k: d { }
-;;;       d: {
-;;;          a
-;;;          m: 9
+;;;          a;
+;;;          m; 9
+;;;          q: i64
 ;;;       }
 ;;;    }
 ;;; }
 
 
+add: num num -> num, |x y| x y +
+
+
+addition: |x y| x maybe y maybe → num,
+   | x y | x y +
 
 
 
+;; colors: [red yellow green blue violet] enum
 
+;; a: b: c; 10
 
-;;; .y x {
-;;; 	.a 4
-;;; }
+e: f64 -> f64, !! 1 + (×) // 1÷ (+) / 1 +
 
+;; hi: f32, 10
 
-;;; .b a.data
+;; quad: {
+;; 	a: b: c: f32
 
-;;; .a {
-;;; 	.data 10
-;;; }
+;; 	dis; b 2 * [4 a c] (×) / -
+;; 	squ; dis 0.5 *
+;; 	den; 2 a ×
 
-;;; .object-a {
-;;; 	.one 1
-;;; 	.two 2
-;;; }
-
-;;; .object-b {
-;;; 	.b {
-;;; 		.c {
-;;; 			.k 90
-;;; 		}
-;;; 	}
-;;; 	.a
-;;; 	.c 12
-;;; }
-
-;;; .duck object-b {
-;;; 	.b {
-;;; 		.d 0
-;;; 	}
-;;; }
-
-
-;;; .constant {
-;;;    .e (+ 1 (fold + (%% (scan * (!!)))))
-;;; }
-
-
-;;; .constant {
-;;; 	.e !! (*) scan %% (+) fold 1 +
-;;; }
-
-;;; .add |x y| x y |x| x 2 *
-
-;;; .quad {
-;;; 	.a f32
-;;; 	.b f32
-;;; 	.c f32
-
-;;; 	.dis b 2 ^ 4 [a c] (*) fold -
-;;; 	.squ dis 0.5 ^
-;;; 	.den 2 a *
-
-;;; 	.pos b ~ squ - den %
-;;; 	.neg b ~ squ + den %
-;;; }
-
-
-;;; .result quad {
-;;; 	.a 1
-;;; 	.b 5
-;;; 	.c 3
-;;; }
+;; 	pos; b 0- squ - den ÷
+;; 	neg; b 0- squ + den ÷
+;; }
