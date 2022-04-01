@@ -68,10 +68,10 @@ pub enum Kind {
 	Tuple,
 	Array,
 	//
-	Par,
-	Ref,
-	Pun,
-	Typ,
+	Para,
+	Term,
+	// Pun,
+	Type,
 	//
 	// Number,
 	Integer,
@@ -235,13 +235,72 @@ impl State {
 
 		while self.until(0, stop) {
 			elements.push(self.element(pars)?);
+			if self.is(0, TKind::Arrow) {
+				self.eat(TKind::Arrow)?;
+
+				let signiture = Element::new(Kind::Type);
+				signiture.head = elements;
+
+				elements = Vec::new();
+				while self.until(0, stop) {
+					signiture.body.push(self.element(pars)?);
+				}
+
+				elements.push(signiture)
+			}
+			// if arrow, then type sig
 		}
 
 		Ok(elements)
 	}
 
 	fn element(&mut self, pars: &Vec<String>) -> Result<Element, String> {
-		unimplemented!();
+		let token = self.get(0).unwrap();
+		match token.kind {
+			// Kind::ParenLF => self.paren(pars),
+			// Kind::SquarenLF => self.array(pars),
+			// Kind::Post => self.function(pars),
+			// Kind::Ref => self._ref(pars),
+			// Kind::Number => self.number(),
+			// Kind::Integer => self.integer(),
+			// Kind::Decimal => self.decimal(),
+			// Kind::String => self.string(),
+			_ => {
+				return Err(format!(
+					"While processing word stack, unexpected token: {:?} was encountered",
+					token
+				))
+			}
+		}
+	}
+
+	fn function(&mut self, pars: &Vec<String>) -> Result<Element, String> {
+		let head = self.pars(&mut pars.len())?;
+		let mut pars: Vec<String> = pars.clone();
+		for par in &head {
+			pars.push(par.text.clone());
+		}
+		let mut func = self.stack(
+			&mut pars,
+			&[
+				TKind::BracketRT,
+				TKind::ParenRT,
+				TKind::Key,
+				TKind::Typ,
+				TKind::Com,
+				TKind::SquarenRT,
+			],
+		)?;
+		func.head = head;
+		func.kind = Kind::Function;
+		Ok(func)
+	}
+
+	fn group(&mut self, pars: &Vec<String>) -> Result<Element, String> {
+		self.eat(TKind::ParenLF)?;
+		let tuple = self.stack(pars, &[TKind::ParenRT])?;
+		self.eat(TKind::ParenRT)?;
+		Ok(tuple)
 	}
 }
 
