@@ -1,0 +1,174 @@
+{
+    "filename.result.c": Network {
+        node: Point,
+        copy: [],
+        path: "filename.result.c",
+        keys: [],
+    },
+    "filename.result": Network {
+        node: Graph,
+        copy: [
+            "quad",
+        ],
+        path: "filename.result",
+        keys: [
+            "filename.result.a",
+            "filename.result.b",
+            "filename.result.c",
+        ],
+    },
+    "filename": Network {
+        node: Graph,
+        copy: [
+            "duck",
+        ],
+        path: "filename",
+        keys: [
+            "filename.constants",
+            "filename.group",
+            "filename.quad",
+            "filename.result",
+            "filename.window",
+        ],
+    },
+    "filename.quad.pos": Network {
+        node: Point,
+        copy: [],
+        path: "filename.quad.pos",
+        keys: [],
+    },
+    "filename.group": Network {
+        node: Graph,
+        copy: [],
+        path: "filename.group",
+        keys: [
+            "filename.group.circle",
+        ],
+    },
+    "filename.quad.den": Network {
+        node: Point,
+        copy: [],
+        path: "filename.quad.den",
+        keys: [],
+    },
+    "filename.result.a": Network {
+        node: Point,
+        copy: [],
+        path: "filename.result.a",
+        keys: [],
+    },
+    "filename.quad": Network {
+        node: Graph,
+        copy: [
+            "f32",
+        ],
+        path: "filename.quad",
+        keys: [
+            "filename.quad.a",
+            "filename.quad.b",
+            "filename.quad.c",
+            "filename.quad.den",
+            "filename.quad.dis",
+            "filename.quad.neg",
+            "filename.quad.pos",
+            "filename.quad.squ",
+        ],
+    },
+    "filename.result.b": Network {
+        node: Point,
+        copy: [],
+        path: "filename.result.b",
+        keys: [],
+    },
+    "filename.constants": Network {
+        node: Graph,
+        copy: [],
+        path: "filename.constants",
+        keys: [
+            "filename.constants.e",
+        ],
+    },
+    "filename.group.circle.e": Network {
+        node: Point,
+        copy: [],
+        path: "filename.group.circle.e",
+        keys: [],
+    },
+    "filename.window": Network {
+        node: Graph,
+        copy: [
+            "library.windowing",
+            "xhdr3.window7",
+        ],
+        path: "filename.window",
+        keys: [
+            "filename.window.canvas",
+        ],
+    },
+    "filename.group.circle": Network {
+        node: Graph,
+        copy: [],
+        path: "filename.group.circle",
+        keys: [
+            "filename.group.circle.e",
+        ],
+    },
+    "filename.quad.dis": Network {
+        node: Point,
+        copy: [],
+        path: "filename.quad.dis",
+        keys: [],
+    },
+    "filename.window.canvas": Network {
+        node: Graph,
+        copy: [
+            "colors",
+        ],
+        path: "filename.window.canvas",
+        keys: [
+            "filename.window.canvas.background",
+        ],
+    },
+    "filename.constants.e": Network {
+        node: Point,
+        copy: [],
+        path: "filename.constants.e",
+        keys: [],
+    },
+    "filename.window.canvas.background": Network {
+        node: Point,
+        copy: [],
+        path: "filename.window.canvas.background",
+        keys: [],
+    },
+    "filename.quad.b": Network {
+        node: Point,
+        copy: [],
+        path: "filename.quad.b",
+        keys: [],
+    },
+    "filename.quad.c": Network {
+        node: Point,
+        copy: [],
+        path: "filename.quad.c",
+        keys: [],
+    },
+    "filename.quad.squ": Network {
+        node: Point,
+        copy: [],
+        path: "filename.quad.squ",
+        keys: [],
+    },
+    "filename.quad.neg": Network {
+        node: Point,
+        copy: [],
+        path: "filename.quad.neg",
+        keys: [],
+    },
+    "filename.quad.a": Network {
+        node: Point,
+        copy: [],
+        path: "filename.quad.a",
+        keys: [],
+    },
+}

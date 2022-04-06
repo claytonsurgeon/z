@@ -1,0 +1,170 @@
+{
+    "filename.add": Network {
+        node: Point,
+        text: "",
+        path: "filename.add",
+        keys: [],
+    },
+    "filename.addition": Network {
+        node: Point,
+        text: "",
+        path: "filename.addition",
+        keys: [],
+    },
+    "filename.prog.b": Network {
+        node: Graph,
+        text: "",
+        path: "filename.prog.b",
+        keys: [
+            "filename.prog.b.a",
+            "filename.prog.b.d",
+            "filename.prog.b.k",
+        ],
+    },
+    "filename.prog.duck.x.a": Network {
+        node: Point,
+        text: "",
+        path: "filename.prog.duck.x.a",
+        keys: [],
+    },
+    "filename.prog.w": Network {
+        node: Point,
+        text: "",
+        path: "filename.prog.w",
+        keys: [],
+    },
+    "filename.prog": Network {
+        node: Graph,
+        text: "",
+        path: "filename.prog",
+        keys: [
+            "filename.prog.b",
+            "filename.prog.duck",
+            "filename.prog.w",
+        ],
+    },
+    "filename.prog.b.a": Network {
+        node: Point,
+        text: "",
+        path: "filename.prog.b.a",
+        keys: [],
+    },
+    "filename.e": Network {
+        node: Point,
+        text: "",
+        path: "filename.e",
+        keys: [],
+    },
+    "filename.prog.duck.x": Network {
+        node: Graph,
+        text: "b.d",
+        path: "filename.prog.duck.x",
+        keys: [
+            "filename.prog.duck.x.a",
+            "filename.prog.duck.x.m",
+            "filename.prog.duck.x.q",
+        ],
+    },
+    "filename.prog.b.d.q": Network {
+        node: Point,
+        text: "",
+        path: "filename.prog.b.d.q",
+        keys: [],
+    },
+    "filename.prog.b.k.q": Network {
+        node: Point,
+        text: "",
+        path: "filename.prog.b.k.q",
+        keys: [],
+    },
+    "filename.prog.duck": Network {
+        node: Graph,
+        text: "",
+        path: "filename.prog.duck",
+        keys: [
+            "filename.prog.duck.b",
+            "filename.prog.duck.x",
+        ],
+    },
+    "filename.prog.duck.b": Network {
+        node: Graph,
+        text: "",
+        path: "filename.prog.duck.b",
+        keys: [
+            "filename.prog.duck.b.a",
+        ],
+    },
+    "filename.prog.duck.b.a": Network {
+        node: Point,
+        text: "",
+        path: "filename.prog.duck.b.a",
+        keys: [],
+    },
+    "filename.prog.b.d.a": Network {
+        node: Point,
+        text: "",
+        path: "filename.prog.b.d.a",
+        keys: [],
+    },
+    "filename": Network {
+        node: Graph,
+        text: "",
+        path: "filename",
+        keys: [
+            "filename.add",
+            "filename.addition",
+            "filename.e",
+            "filename.prog",
+        ],
+    },
+    "filename.prog.b.d.m": Network {
+        node: Point,
+        text: "",
+        path: "filename.prog.b.d.m",
+        keys: [],
+    },
+    "filename.prog.b.k.m": Network {
+        node: Point,
+        text: "",
+        path: "filename.prog.b.k.m",
+        keys: [],
+    },
+    "filename.prog.b.k": Network {
+        node: Graph,
+        text: "d",
+        path: "filename.prog.b.k",
+        keys: [
+            "filename.prog.b.k.a",
+            "filename.prog.b.k.m",
+            "filename.prog.b.k.q",
+        ],
+    },
+    "filename.prog.b.d": Network {
+        node: Graph,
+        text: "",
+        path: "filename.prog.b.d",
+        keys: [
+            "filename.prog.b.d.a",
+            "filename.prog.b.d.m",
+            "filename.prog.b.d.q",
+        ],
+    },
+    "filename.prog.duck.x.m": Network {
+        node: Point,
+        text: "",
+        path: "filename.prog.duck.x.m",
+        keys: [],
+    },
+    "filename.prog.duck.x.q": Network {
+        node: Point,
+        text: "",
+        path: "filename.prog.duck.x.q",
+        keys: [],
+    },
+    "filename.prog.b.k.a": Network {
+        node: Point,
+        text: "",
+        path: "filename.prog.b.k.a",
+        keys: [],
+    },
+}

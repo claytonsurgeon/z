@@ -1,50 +1,45 @@
 
 
 
-;;; prog: {
-;;;    w: f32
-;;;    duck: {
-;;;       x: b.d {
-;;;          a; 5
-;;;       }
-;;;       b: { a; 9 }
-      
-;;;    }
-;;;    b: {
-;;;       a; 10
-;;;       k: d {}
-;;;       d: {
-;;;          a;
-;;;          m; 9
-;;;          q: i64
-;;;       }
-;;;    }
-;;; }
+e: i32, + {
+	x: i32, 10
+	a: 1
+	b: fold {
+		fa: + 
+		as: ÷ {
+			a: 1
+			b: scan {
+				fa: ×
+				as: + {
+					a: 1
+					b: iota {
+						a: e.x
+					}
+				}
+			}
+		}
+	}
+}
 
-
-add: num num -> num, |x y| x y +
-
-
-addition: |x y| x maybe y maybe → num,
-   | x y | x y +
+my-e: f64, e { x: 10 }
 
 
 
-;; colors: [red yellow green blue violet] enum
+result: {
+	f64, [a, b]
 
-;; a: b: c; 10
+	a: 10
+	b: 20
+}
 
-e: f64 -> f64, !! 1 + (×) // 1÷ (+) / 1 +
+result: f64, {
+	[a, b]
 
-;; hi: f32, 10
+	a: 10
+	b: 20
+}
 
-;; quad: {
-;; 	a: b: c: f32
+a: 10
+b: 20
+duck: result { .a .b }
 
-;; 	dis; b 2 * [4 a c] (×) / -
-;; 	squ; dis 0.5 *
-;; 	den; 2 a ×
-
-;; 	pos; b 0- squ - den ÷
-;; 	neg; b 0- squ + den ÷
-;; }

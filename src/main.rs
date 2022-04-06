@@ -78,27 +78,27 @@ fn compile(source: &String) -> Result<String, String> {
     write_file(token_path, &token_string(&tokens));
     //
     //
-    let (pmap, emap, tmap) = parser::parser(&"filename".to_string(), tokens)?;
-    let pmap_path = &mut source.clone();
+    let (nmap, emap, tmap) = parser::parser(&"filename".to_string(), tokens)?;
+    let nmap_path = &mut source.clone();
     let emap_path = &mut source.clone();
     let tmap_path = &mut source.clone();
-    pmap_path.push_str(&".1.pmap".to_string());
+    nmap_path.push_str(&".1.nmap".to_string());
     emap_path.push_str(&".1.emap".to_string());
     tmap_path.push_str(&".1.tmap".to_string());
-    write_file(pmap_path, &format!("{:#?}", &pmap));
+    write_file(nmap_path, &format!("{:#?}", &nmap));
     write_file(emap_path, &format!("{:#?}", &emap));
     write_file(tmap_path, &format!("{:#?}", &tmap));
     //
-    let (pmap, emap, tmap) = clone::parser(pmap, emap, tmap)?;
-    let pmap_path = &mut source.clone();
-    let emap_path = &mut source.clone();
-    let tmap_path = &mut source.clone();
-    pmap_path.push_str(&".2.pmap".to_string());
-    emap_path.push_str(&".2.emap".to_string());
-    tmap_path.push_str(&".2.tmap".to_string());
-    write_file(pmap_path, &format!("{:#?}", &pmap));
-    write_file(emap_path, &format!("{:#?}", &emap));
-    write_file(tmap_path, &format!("{:#?}", &tmap));
+    // let (nmap, emap, tmap) = clone::parser(nmap, emap, tmap)?;
+    // let nmap_path = &mut source.clone();
+    // let emap_path = &mut source.clone();
+    // let tmap_path = &mut source.clone();
+    // nmap_path.push_str(&".2.nmap".to_string());
+    // emap_path.push_str(&".2.emap".to_string());
+    // tmap_path.push_str(&".2.tmap".to_string());
+    // write_file(nmap_path, &format!("{:#?}", &nmap));
+    // write_file(emap_path, &format!("{:#?}", &emap));
+    // write_file(tmap_path, &format!("{:#?}", &tmap));
     //
 
     Ok("no errors".to_string())

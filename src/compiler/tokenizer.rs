@@ -8,12 +8,12 @@ pub enum Kind {
    Newline,
    //
    String,
-   Number,
+   // Number,
    Integer,
    Decimal,
 
    //
-   Arrow, // ->
+   // Arrow, // ->
    ParenLF,
    ParenRT,
    SquarenLF,
@@ -25,6 +25,7 @@ pub enum Kind {
 
    Post,
 
+   Net, // {
    Typ, // :
    Key, // ;
    Com, // ,
@@ -59,9 +60,12 @@ pub fn tokenizer(input: &String) -> Result<Vec<Token>, String> {
             (Kind::Post, Regex::new(r"^\|").unwrap()),
 
             // (Kind::Number, Regex::new(r"^[[:digit:]]([^[:space:]|{}()\[\]])*").unwrap()),
-            // (Kind::Control, Regex::new(r"^([^[:space:].|{}()\[\]])+\-\{").unwrap()),
+
+            (Kind::Net, Regex::new(r"^([^[:space:].|{}()\[\]])+[.][[:space:]]*\{").unwrap()),
+            // (Kind::Net, Regex::new(r"^([^[:space:].|{}()\[\]])+[.]").unwrap()),
 
             (Kind::Com, Regex::new(r"^,").unwrap()),
+            (Kind::Dot, Regex::new(r"^\.([^[:space:],|{}()\[\]])+").unwrap()),
             (Kind::Typ, Regex::new(r"^([^[:space:],|{}()\[\]])+:").unwrap()),
             (Kind::Key, Regex::new(r"^([^[:space:],|{}()\[\]])+;").unwrap()),
             // (Kind::Dot, Regex::new(r"^\.").unwrap()),
@@ -104,6 +108,13 @@ pub fn tokenizer(input: &String) -> Result<Vec<Token>, String> {
       ];
    }
 
+   lazy_static! {
+      static ref NETWORK: Vec<(Kind, Regex)> = vec![(
+         Kind::Net,
+         Regex::new(r"^([^[:space:],.|{}()\[\]])+").unwrap()
+      ),];
+   }
+
    let mut tokens: Vec<Token> = Vec::new();
    let mut cursor = 0;
    let mut row = 1;
@@ -137,6 +148,24 @@ pub fn tokenizer(input: &String) -> Result<Vec<Token>, String> {
                            break;
                         }
                      }
+                     tokens.push(t);
+                  }
+                  Kind::Key => {
+                     t.text = t.text[..t.text.len() - 1].to_string();
+                     tokens.push(t);
+                  }
+                  Kind::Typ => {
+                     t.text = t.text[..t.text.len() - 1].to_string();
+                     tokens.push(t);
+                  }
+                  // Kind::Net => {
+                  //    t.text = t.text[..t.text.len() - 1].to_string();
+                  //    tokens.push(t);
+                  // }
+                  Kind::Net => {
+                     let (kind, re) = &NETWORK[0];
+                     let mat = re.find(&t.text).unwrap();
+                     t.text = t.text[..mat.end()].to_string();
                      tokens.push(t);
                   }
                   _ => {

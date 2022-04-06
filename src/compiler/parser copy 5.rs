@@ -35,7 +35,7 @@ impl Element {
 pub struct Network {
 	// meta: Meta,
 	pub node: Node,
-	pub copy: Vec<String>,
+	pub text: String,
 	pub path: String,
 	pub keys: Vec<String>,
 }
@@ -45,7 +45,7 @@ impl Network {
 		Network {
 			// meta: Meta { col: 0, row: 0 },
 			node,
-			copy: Vec::new(),
+			text: String::new(),
 			path: String::new(),
 			keys: Vec::new(),
 		}
@@ -123,7 +123,6 @@ impl State {
 	fn networks(&mut self, stop: &[TKind]) -> Result<Network, String> {
 		let mut graph = Network::new(Node::Graph);
 
-		graph.copy = self.clones(stop)?;
 		while self.until(0, stop) {
 			graph.keys.push(self.network()?.path.clone());
 		}
@@ -134,21 +133,32 @@ impl State {
 	}
 
 	fn network(&mut self) -> Result<Network, String> {
-		let kind = self.get(0).unwrap().kind;
-		let text = self.eat(kind)?.text.clone();
-		//
+		let typ = self.is(0, TKind::Typ);
+		let text = if typ {
+			let token = self.eat(TKind::Typ)?;
+			token.text[..token.text.len() - 1].to_string()
+		} else {
+			let token = self.eat(TKind::Key)?;
+			token.text[..token.text.len() - 1].to_string()
+		};
+
 		self.keychain.push(text);
-		let mut network = match kind {
-			TKind::Net => self.graph()?,
-			TKind::Typ => self.typed()?,
-			TKind::Key => self.point()?,
-			_ => {
-				panic!("Should never hit")
+
+		let mut network = if typ {
+			if self.is(0, TKind::BracketLF) {
+				self.graph()?
+			} else if self.is(0, TKind::Ref) && self.is(1, TKind::BracketLF) {
+				self.clone()?
+			} else {
+				self.typed()?
 			}
+		} else {
+			self.point()?
 		};
 
 		network.path = self.keychain.join(".");
 		self.nmap.insert(network.path.clone(), network.clone());
+
 		self.keychain.pop();
 
 		Ok(network)
@@ -204,34 +214,21 @@ impl State {
 	}
 
 	fn graph(&mut self) -> Result<Network, String> {
-		// self.eat(TKind::BracketLF)?;
+		self.eat(TKind::BracketLF)?;
 		let networks = self.networks(&[TKind::BracketRT])?;
 		self.eat(TKind::BracketRT)?;
 		Ok(networks)
 	}
 
-	fn clones(&mut self, stop: &[TKind]) -> Result<Vec<String>, String> {
-		let mut clones = Vec::new();
-
-		while self.until(0, &[stop, &[TKind::Typ, TKind::Key, TKind::Net]].concat()) {
-			clones.push(self.eat(TKind::Ref)?.text.clone());
-			if self.is(0, TKind::Com) {
-				self.eat(TKind::Com)?;
-			}
-		}
-
-		Ok(clones)
+	fn clone(&mut self) -> Result<Network, String> {
+		let text = self.eat(TKind::Ref)?.text.clone();
+		self.eat(TKind::BracketLF)?;
+		let mut networks = self.networks(&[TKind::BracketRT])?;
+		self.eat(TKind::BracketRT)?;
+		networks.node = Node::Clone;
+		networks.text = text;
+		Ok(networks)
 	}
-
-	// fn clone(&mut self) -> Result<Network, String> {
-	// 	let text = self.eat(TKind::Ref)?.text.clone();
-	// 	self.eat(TKind::BracketLF)?;
-	// 	let mut networks = self.networks(&[TKind::BracketRT])?;
-	// 	self.eat(TKind::BracketRT)?;
-	// 	networks.node = Node::Clone;
-	// 	networks.text = text;
-	// 	Ok(networks)
-	// }
 
 	fn stack(&mut self, pars: &Vec<String>, stop: &[TKind]) -> Result<Element, String> {
 		let mut element = Element::new(Kind::Tuple);

@@ -1,0 +1,276 @@
+
+
+
+e: i32, + {
+	x: i32, 10
+	a: 1
+	b: fold {
+		fa: + 
+		as: ÷ {
+			a: 1
+			b: scan {
+				fa: ×
+				as: + {
+					a: 1
+					b: iota {
+						a: e.x
+					}
+				}
+			}
+		}
+	}
+}
+
+my-e: f64, e { x: 10 }
+
+
+duck
+;; multiple commas can be used (they have no effect)
+(quad: R R R -> R R, |a b c| a b c Neg, a b c Pos.
+    f64
+    (Dis, |a b c| b 2 * 4 a × c × -)
+    (Squ, Dis 0.5 *)
+    (Den, |a| 2 a ×)
+
+    (Neg, |a b c| b -- a b c Squ - a Den ÷)
+    (Pos, |a b c| b -- a b c Squ + a Den ÷))
+
+(quad: R R R -> R R, |a b c| b 2 * 4 a × c × - 0.5 *
+    |squ| 2 a × |den|
+        b -- squ - den ÷
+        b -- squ + den ÷
+    . f64)
+
+(quad. f64: R R R -> R R,
+    |a b c|
+        b 2 * 4 a × c × - 0.5 *
+    |squ|
+        2 a ×
+    |den|
+        b -- squ - den ÷
+        b -- squ + den ÷)
+
+(quad. f64, R R R -> R R:
+    |a b c|
+        b 2 * 4 a × c × - 0.5 *
+    |squ|
+        2 a ×
+    |den|
+        b -- squ - den ÷
+        b -- squ + den ÷)
+
+
+(label type: value,
+    
+    include
+    (label: value)
+    (label: value))
+
+
+(label type, value.
+    
+    include
+    (label, value)
+    (label, value))
+
+
+(graph type signiture -> output: sequence 10 operation execute,
+    imported.thing
+    (subgraph, property))
+
+(graph type signiture -> output, sequence 10 operation execute
+.   imported.thing
+    (subgraph, property)
+    (thing, 100))
+
+(graph.
+    imported.thing
+    (subgraph, property)
+    (thing, 100)
+    
+    : type signiture -> output, sequence 10 operation execute)
+
+
+
+(window.
+    library.windowing
+    xhdr3.window7
+
+    (canvas. colors
+        (background: rgba, 255 176 89 0.9)))
+
+
+
+(constants,
+    (e f64 -> f64: !! 1 + (×) // 1÷ (+) / 1 +))
+
+(constants.
+    (e: f64 -> f64, !! 1 + (×) // 1÷ (+) / 1 +))
+
+(group:
+    (circle:
+        (e, 10 constants.e)))
+
+(group,
+    (circle,
+        (e: 10 constants.e)))
+
+
+(max: R R -> R, |x y|
+    (if (x y >) (x)
+        (x y =) (x)
+        (x y <) (y)))
+
+;; R  real
+;; Z  Integer
+;; N  natural
+
+(quad: f32
+    (a, 1)
+    (b, 5)
+    (c, 3)
+
+    (dis, b 2 * 4 a × c × -)
+    (squ, dis 0.5 *)
+    (den, 2 a ×)
+
+    (neg, b -- squ - den ÷)
+    (pos, b -- squ + den ÷))
+
+
+
+
+(result: quad
+    (a, 1)
+    (b, 5)
+    (c, 3))
+
+
+(clamp, |val min max|
+    (if (val min <) (min)
+        (val max >) (max)
+                    (val)))
+
+
+
+;;; window.{
+;;;    library.windowing
+;;;    xhdr3.window7
+
+;;;    canvas.{ colors
+;;;       background: rgba, 255 176 89 0.9
+;;;    }
+;;; }
+
+
+
+;;; constants. {
+;;;    e: f64 -> f64, !! 1 + (×) // 1÷ (+) / 1 +
+;;; }
+
+;;; group.{
+;;;    circle.{
+;;;       e; 10 constants.e
+;;;    }
+;;; }
+
+
+
+
+;;; quad.{ f32
+;;;    a: b: c: f32
+
+;;;    dis; b 2 * 4 a × c × -
+;;;    squ; dis 0.5 *
+;;;    den; 2 a ×
+
+;;;    neg; b -- squ - den ÷
+;;;    pos; b -- squ + den ÷
+;;; }
+
+
+;;; result.{ quad
+;;;    a; 1
+;;;    b; 5
+;;;    c; 3
+;;; }
+
+
+
+
+
+;;; id: |a| a -> a, |x| x 
+;;; int; 10 id
+
+;;; prog-{
+;;;    w: f32
+;;;    duck-{
+;;;       x-{ 
+;;;          b.d
+;;;          a; 5
+;;;       }
+;;;       b-{ a; 9 }
+      
+;;;    }
+;;;    b-{
+;;;       a; 10
+;;;       k-{d}
+;;;       d-{
+;;;          a;
+;;;          m; 9
+;;;          q: i64
+;;;       }
+;;;    }
+;;; }
+
+;;; prog: {
+;;;    w: f32
+;;;    duck: {
+;;;       x: b.d {
+;;;          a; 5
+;;;       }
+;;;       b: { a; 9 }
+      
+;;;    }
+;;;    b: {
+;;;       a; 10
+;;;       k: d {}
+;;;       d: {
+;;;          a;
+;;;          m; 9
+;;;          q: i64
+;;;       }
+;;;    }
+;;; }
+
+;;; add: num num -> num, |x y| x y +
+
+;;; add. num num -> num, |x y| x y +
+
+
+;;; addition: |x y| x maybe y maybe → num,
+;;;    | x y | x y +
+
+;;; addition. |x y| x maybe y maybe → num,
+;;;    | x y | x y +
+
+
+
+;; colors: [red yellow green blue violet] enum
+
+;; a: b: c; 10
+
+;;; e: f64 -> f64, !! 1 + (×) // 1÷ (+) / 1 +
+
+;; hi: f32, 10
+
+;; quad: {
+;; 	a: b: c: f32
+
+;; 	dis; b 2 * [4 a c] (×) / -
+;; 	squ; dis 0.5 *
+;; 	den; 2 a ×
+
+;; 	pos; b 0- squ - den ÷
+;; 	neg; b 0- squ + den ÷
+;; }

@@ -115,8 +115,7 @@ impl State {
 		let mut clone = self.nmap.get(&key).unwrap().clone();
 		// let clone_point = last_point(&clone.key);
 		let mut keychain: Vec<String> = key.split(".").map(str::to_string).collect();
-		// let mut refchain: Vec<String> = clone.text.split(".").map(str::to_string).collect();
-		let mut refchain: Vec<String> = Vec::new();
+		let mut refchain: Vec<String> = clone.text.split(".").map(str::to_string).collect();
 		// keychain.pop();
 		// keychain.append(&mut refchain);
 
